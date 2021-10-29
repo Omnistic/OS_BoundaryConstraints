@@ -86,7 +86,7 @@ namespace CSharpUserExtensionApplication
                     // Retrieve current surface
                     ILDERow CurrentSurface = TheLDE.GetSurfaceAt(SurfaceID);
 
-                    if (double.IsInfinity(CurrentSurface.Thickness))
+                    if (double.IsInfinity(CurrentSurface.Thickness) || CurrentSurface.ThicknessCell.GetSolveData().Type != ZOSAPI.Editors.SolveType.Variable)
                     {
                         continue;
                     }
