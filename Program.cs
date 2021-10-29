@@ -86,6 +86,11 @@ namespace CSharpUserExtensionApplication
                     // Retrieve current surface
                     ILDERow CurrentSurface = TheLDE.GetSurfaceAt(SurfaceID);
 
+                    if (double.IsInfinity(CurrentSurface.Thickness))
+                    {
+                        continue;
+                    }
+
                     // Test if material cell is empty (air)
                     if (CurrentSurface.Material == "")
                     {
