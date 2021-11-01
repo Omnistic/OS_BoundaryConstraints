@@ -77,9 +77,17 @@ namespace CSharpUserExtensionApplication
                 // Initialize MF operand
                 IMFERow Operand;
 
+                // Check if Multi-Configuration is enabled
+                Operand = TheMFE.GetOperandAt(1);
+                int OperandPos = 1;
+
+                if (Operand.Type == ZOSAPI.Editors.MFE.MeritOperandType.CONF)
+                {
+                    OperandPos++;
+                }
+
                 // Loop over the surfaces (except last one)
                 int NumberOfSurfaces = TheLDE.NumberOfSurfaces;
-                int OperandPos = 1;
 
                 for (int SurfaceID = 0; SurfaceID < NumberOfSurfaces - 1; SurfaceID++)
                 {
@@ -149,7 +157,15 @@ namespace CSharpUserExtensionApplication
                 }
 
                 // Write comment
-                Operand = TheMFE.InsertNewOperandAt(1);
+                Operand = TheMFE.GetOperandAt(1);
+                if (Operand.Type == ZOSAPI.Editors.MFE.MeritOperandType.CONF)
+                {
+                    Operand = TheMFE.InsertNewOperandAt(2);
+                }
+                else
+                {
+                    Operand = TheMFE.InsertNewOperandAt(1);
+                }
                 Operand.ChangeType(ZOSAPI.Editors.MFE.MeritOperandType.BLNK);
                 Operand.GetOperandCell(ZOSAPI.Editors.MFE.MeritColumn.Comment).Value = "Individual air and glass thickness boundary constraints.";
             }
